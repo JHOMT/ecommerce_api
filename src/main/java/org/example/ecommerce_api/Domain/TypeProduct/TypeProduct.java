@@ -14,7 +14,7 @@ public class TypeProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "type_id")
-    private Long id;
+    private Long typeId;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -29,7 +29,7 @@ public class TypeProduct {
         this.name = data.name();
     }
 
-    public TypeProduct(Long productId) {
-        this.id = productId;
+    public TypeProduct(Long typeId) {
+        this.typeId = typeId;
     }
 }

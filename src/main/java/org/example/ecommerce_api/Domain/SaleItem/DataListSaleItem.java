@@ -8,7 +8,7 @@ public record DataListSaleItem(
 ) {
     public DataListSaleItem(SaleItem data){
         this(
-                data.getId().getSaleId(),
+                data.getId(),
                 data.getProduct().getName(),
                 data.getQuantity(),
                 data.getPrice().toString()

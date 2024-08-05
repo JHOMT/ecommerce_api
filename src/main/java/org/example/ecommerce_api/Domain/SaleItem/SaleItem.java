@@ -6,10 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.ecommerce_api.Domain.Product.Product;
 import org.example.ecommerce_api.Domain.Sales.Sale;
-import org.jetbrains.annotations.NotNull;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -18,48 +14,28 @@ import java.math.BigDecimal;
 @Table(name = "sale_items")
 public class SaleItem {
 
-    @EmbeddedId
-    private SaleItemId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "item_id")
+    private Long id;
 
     @ManyToOne
-    @MapsId("saleId")
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "sale_id", nullable = false)
     private Sale sale;
 
     @ManyToOne
-    @MapsId("productId")
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @Column(name = "quantity")
     private Integer quantity;
 
     @Column(name = "price")
-    private BigDecimal price;
+    private Double price;
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Embeddable
-    public static class SaleItemId implements Serializable {
-
-        @Column(name = "item_id")
-        private Long saleId;
-
-        @Column(name = "product_id")
-        private Long productId;
-    }
-
-    public SaleItem(@NotNull DataRegisterSaleItem data){
+    public SaleItem(DataRegisterSaleItem data, Sale sale) {
         this.product = new Product(data.productId());
         this.quantity = data.quantity();
-    }
-
-    public SaleItem(@NotNull Sale sale, @NotNull DataRegisterSaleItem data) {
         this.sale = sale;
-        this.product = new Product(data.productId());
-        this.quantity = data.quantity();
-        this.price = product.getPrice().multiply(BigDecimal.valueOf(data.quantity()));
-        this.id = new SaleItemId(sale.getSaleId(), product.getProductId());
     }
 }

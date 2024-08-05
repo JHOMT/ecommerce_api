@@ -8,6 +8,8 @@ import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
 import java.security.Timestamp;
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,7 +33,7 @@ public class User {
 
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     @Generated(GenerationTime.INSERT)
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     public User(Long userId) {
         this.userId = userId;

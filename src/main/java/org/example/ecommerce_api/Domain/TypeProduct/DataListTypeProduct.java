@@ -6,7 +6,7 @@ public record DataListTypeProduct(
 ) {
     public DataListTypeProduct(TypeProduct data){
         this(
-                data.getId(),
+                data.getTypeId(),
                 data.getName()
         );
     }

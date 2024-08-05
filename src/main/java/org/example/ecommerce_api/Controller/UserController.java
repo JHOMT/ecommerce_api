@@ -31,7 +31,7 @@ public class UserController {
         return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<?> update(@RequestBody @Valid DataUpdateUser data){
         return new ResponseEntity<>(userService.update(data), HttpStatus.OK);
     }
@@ -42,7 +42,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid DataLoginUser data){
         return new ResponseEntity<>(userService.login(data), HttpStatus.OK);
     }

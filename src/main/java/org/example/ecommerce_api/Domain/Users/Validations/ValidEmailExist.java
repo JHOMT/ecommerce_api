@@ -21,8 +21,6 @@ public class ValidEmailExist implements ValidUser{
 
     @Override
     public void validUpdate(DataUpdateUser dataUpdateUser) {
-        if(userRepository.existsByEmail(dataUpdateUser.email())){
-            throw new RuntimeException("Email already exists");
-        }
+
     }
 }

@@ -4,6 +4,7 @@ import org.example.ecommerce_api.Domain.Users.Validations.ValidUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,13 +18,13 @@ public class UserService {
     public DataListUser save(DataRegisterUser data){
         validUsers.forEach(validUser -> validUser.validateRegister(data));
         User user = new User(data);
-        userRepository.save(user);
+        user = userRepository.save(user);
         return new DataListUser(user);
     }
 
-    public DataListUser login(DataLoginUser data){
-        Optional<User> user = userRepository.validLogin(data.email(), data.password());
-        if(user.isEmpty()){
+    public DataListUser login(DataLoginUser data) {
+        Optional<User> user = userRepository.findByEmailAndPassword(data.email(), data.password());
+        if (user.isEmpty()) {
             throw new RuntimeException("Invalid email or password");
         }
         return new DataListUser(user.get());

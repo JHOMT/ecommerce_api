@@ -3,15 +3,12 @@ package org.example.ecommerce_api.Domain.Sales;
 import jakarta.transaction.Transactional;
 import org.example.ecommerce_api.Domain.Product.Product;
 import org.example.ecommerce_api.Domain.Product.ProductRepository;
-import org.example.ecommerce_api.Domain.SaleItem.DataRegisterSaleItem;
-import org.example.ecommerce_api.Domain.SaleItem.SaleItem;
-import org.example.ecommerce_api.Domain.SaleItem.SaleItemRepository;
+import org.example.ecommerce_api.Domain.SaleItem.*;
 import org.example.ecommerce_api.Domain.Sales.Validations.ValidSale;
 import org.example.ecommerce_api.Domain.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,24 +36,25 @@ public class SaleService {
         Sale sale = new Sale();
         sale.setUser(user);
         sale.setSaleDate(LocalDateTime.now());
+        sale = saleRepository.save(sale);
 
-        BigDecimal totalPrice = BigDecimal.ZERO;
+        double totalPrice = 0.0;
         for (DataRegisterSaleItem item : data.saleItems()) {
             Product product = productRepository.findById(item.productId())
-                    .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+                    .orElseThrow(() -> new RuntimeException("Product not found"));
 
-            BigDecimal price = product.getPrice().multiply(BigDecimal.valueOf(item.quantity()));
-            totalPrice = totalPrice.add(price);
+            System.out.println(product);
 
-            SaleItem saleItem = new SaleItem();
-            saleItem.setSale(sale);
-            saleItem.setProduct(product);
-            saleItem.setQuantity(item.quantity());
-            saleItem.setPrice(price);
+            double priceItemSale = product.getPrice()* item.quantity();
+            SaleItem saleItem = new SaleItem(item, sale);
+            saleItem.setPrice(priceItemSale);
             saleItemRepository.save(saleItem);
+
+            totalPrice += priceItemSale;
 
             product.setQuantity(product.getQuantity() - item.quantity());
             productRepository.save(product);
+            System.out.println("Total Price: " + totalPrice);
         }
 
         sale.setTotalPrice(totalPrice);
@@ -65,16 +63,24 @@ public class SaleService {
         return new DataListSale(sale);
     }
 
+
     public List<DataListSale> findAll() {
         return saleRepository.findAll().stream()
                 .map(DataListSale::new)
                 .collect(Collectors.toList());
     }
 
-    public List<DataListSale> findByUserId(Long userId) {
-        return saleRepository.findByUserId(userId).stream()
-                .map(DataListSale::new)
-                .collect(Collectors.toList());
+    public List<DataResponseSale> findByUserId(Long userId) {
+        List<DataResponseSale> response = saleRepository.findByUserId(userId).stream()
+                .map(sale -> {
+                    List<DataListSaleItem> saleItems = saleItemRepository.findBySaleSaleId(sale.getSaleId()).stream()
+                            .map(DataListSaleItem::new)
+                            .toList();
+                    return new DataResponseSale(new DataListSale(sale), saleItems);
+                })
+                .toList();
+
+        return response;
     }
 }
 

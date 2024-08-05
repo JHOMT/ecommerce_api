@@ -27,8 +27,10 @@ public class ProductService {
     @Transactional
     public boolean update(DataUpdateProduct data) {
         validProducts.forEach(validProducts -> validProducts.validateUpdate(data));
-
-        Product product = productRepository.save(new Product(data));
+        Product product = productRepository.findById(data.id())
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        product.update(data);
+        productRepository.save(product);
         return true;
     }
 
@@ -46,6 +48,8 @@ public class ProductService {
 
     @Transactional
     public void delete(Long id) {
-        productRepository.deleteById(id);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        productRepository.deleteById(product.getProductId());
     }
 }

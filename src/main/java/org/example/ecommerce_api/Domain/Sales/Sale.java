@@ -8,13 +8,9 @@ import org.example.ecommerce_api.Domain.SaleItem.SaleItem;
 import org.example.ecommerce_api.Domain.Users.User;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
-import org.jetbrains.annotations.NotNull;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -33,19 +29,13 @@ public class Sale {
     private User user;
 
     @Column(name = "total_price")
-    private BigDecimal totalPrice;
+    private Double totalPrice;
 
-    @Column(name = "sale_date", nullable = false, updatable = false, insertable = false)
-    @Generated(GenerationTime.INSERT)
+    @Column(name = "sale_date")
     private LocalDateTime saleDate;
 
-    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
-    private List<SaleItem> saleItems;
-
-    public Sale(@NotNull DataRegisterSale data) {
+    public Sale(DataRegisterSale data){
         this.user = new User(data.userId());
-        this.saleItems = data.saleItems().stream()
-                .map(item -> new SaleItem(this, item))
-                .collect(Collectors.toList());
+        this.saleDate = LocalDateTime.now();
     }
 }

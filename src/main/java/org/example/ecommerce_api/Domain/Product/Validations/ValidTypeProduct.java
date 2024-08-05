@@ -27,7 +27,7 @@ public class ValidTypeProduct implements ValidProducts {
 
     @Override
     public void validateUpdate(DataUpdateProduct data) {
-        Optional<Product> typeProduct = Optional.ofNullable(productRepository.findById(data.productId())
+        Optional<Product> typeProduct = Optional.ofNullable(productRepository.findById(data.id())
                 .orElseThrow(() -> new RuntimeException("Type product not found")));
     }
 }

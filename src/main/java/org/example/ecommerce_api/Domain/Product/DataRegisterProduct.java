@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 public record DataRegisterProduct(
         @NotNull String name,
         @NotNull Long typeProductId,
-        @NotNull BigDecimal price,
+        @NotNull Double price,
         @NotNull Integer rating,
         @NotNull String image,
         @NotNull String description,
