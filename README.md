@@ -44,10 +44,7 @@ Sigue estos pasos para configurar el proyecto localmente.
    ```bash
    mvn spring-boot:run
     ```
-
-### Configuración
-Configure la conexión a la base de datos MariaDB en el archivo src/main/resources/application.properties:
-
+   
 ## Configuración
 
 Configura la conexión a la base de datos MariaDB en el archivo `src/main/resources/application.properties`:
