@@ -22,12 +22,12 @@ public class UserService {
         return new DataListUser(user);
     }
 
-    public DataListUser login(DataLoginUser data) {
+    public DataResponseLogin login(DataLoginUser data) {
         Optional<User> user = userRepository.findByEmailAndPassword(data.email(), data.password());
         if (user.isEmpty()) {
             throw new RuntimeException("Invalid email or password");
         }
-        return new DataListUser(user.get());
+        return new DataResponseLogin(user.get(), "token");
     }
 
     public DataListUser update(DataUpdateUser data) {

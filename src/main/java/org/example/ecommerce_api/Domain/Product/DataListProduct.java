@@ -1,14 +1,14 @@
 package org.example.ecommerce_api.Domain.Product;
 
 public record DataListProduct(
-        Long productId,
+        Long id,
         String name,
         String productType,
         String price,
         int rating,
         String image,
         String description,
-        int quantity
+        int stock
 ) {
     public DataListProduct(Product product) {
         this(
