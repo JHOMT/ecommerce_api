@@ -1,4 +1,6 @@
-package org.example.ecommerce_api.Domain.Users;
+package org.example.ecommerce_api.Infra.Security;
+
+import org.example.ecommerce_api.Domain.Users.User;
 
 public record DataResponseLogin(
     String token,
@@ -10,7 +12,7 @@ public record DataResponseLogin(
         this(
             token,
             user.getUserId(),
-            user.getUsername(),
+            user.getName(),
             user.getEmail()
         );
     }

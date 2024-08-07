@@ -8,7 +8,7 @@ public record DataListSale(
 ) {
     public DataListSale(Sale data) {
         this(
-                data.getUser().getUsername(),
+                data.getUser().getName(),
                 data.getUser().getEmail(),
                 data.getSaleDate().toString(),
                 data.getTotalPrice()

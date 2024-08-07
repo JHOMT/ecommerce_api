@@ -8,7 +8,7 @@ public record DataListUser(
     public DataListUser(User data){
         this(
                 data.getUserId(),
-                data.getUsername(),
+                data.getName(),
                 data.getEmail()
         );
     }

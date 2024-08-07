@@ -1,5 +1,6 @@
 package org.example.ecommerce_api.Controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.example.ecommerce_api.Domain.TypeProduct.DataRegisterTypeProduct;
 import org.example.ecommerce_api.Domain.TypeProduct.DataUpdateTypeProduct;

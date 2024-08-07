@@ -1,7 +1,8 @@
 package org.example.ecommerce_api.Controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import org.example.ecommerce_api.Domain.Users.DataLoginUser;
+import org.example.ecommerce_api.Infra.Security.DataLoginUser;
 import org.example.ecommerce_api.Domain.Users.DataRegisterUser;
 import org.example.ecommerce_api.Domain.Users.DataUpdateUser;
 import org.example.ecommerce_api.Domain.Users.UserService;

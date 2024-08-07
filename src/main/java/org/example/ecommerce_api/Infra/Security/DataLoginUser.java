@@ -1,4 +1,4 @@
-package org.example.ecommerce_api.Domain.Users;
+package org.example.ecommerce_api.Infra.Security;
 
 import jakarta.validation.constraints.NotNull;
 

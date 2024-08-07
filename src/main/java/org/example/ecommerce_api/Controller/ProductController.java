@@ -12,38 +12,44 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
+
     @Autowired
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid DataRegisterProduct data){
+    public ResponseEntity<?> save(@RequestBody @Valid DataRegisterProduct data) {
         return new ResponseEntity<>(productService.save(data), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAll() {
         return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id){
+    public ResponseEntity<?> findById(@PathVariable Long id) {
         return new ResponseEntity<>(productService.findById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<?> findByName(@PathVariable String name) {
+        return new ResponseEntity<>(productService.findByName(name), HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         productService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody @Valid DataUpdateProduct data){
+    public ResponseEntity<?> update(@RequestBody @Valid DataUpdateProduct data) {
         productService.update(data);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/type/{id}")
-    public ResponseEntity<?> findByTypeProductId(@PathVariable Long id){
+    public ResponseEntity<?> findByTypeProductId(@PathVariable Long id) {
         return new ResponseEntity<>(productService.findByTypeProductId(id), HttpStatus.OK);
     }
 }

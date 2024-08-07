@@ -8,6 +8,14 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    @Query("SELECT p FROM Product p WHERE p.typeProduct.id = ?1")
+    @Query("SELECT p FROM Product p WHERE p.typeProduct.typeId = ?1")
     List<Product> findByTypeProductId(Long id);
+
+    @Query("""
+            SELECT p
+            FROM Product p
+            WHERE p.name LIKE %?1%
+            OR p.description LIKE %?1%
+    """)
+    List<Product> findByName(String name);
 }

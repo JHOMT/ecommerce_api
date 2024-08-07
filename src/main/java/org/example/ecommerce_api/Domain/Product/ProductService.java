@@ -9,14 +9,16 @@ import java.util.List;
 
 @Service
 public class ProductService {
+
     @Autowired
     private ProductRepository productRepository;
+
     @Autowired
     List<ValidProducts> validProducts;
 
     @Transactional
-    public DataListProduct save(DataRegisterProduct data){
-        validProducts.forEach(validProducts -> validProducts.validateRegister(data));
+    public DataListProduct save(DataRegisterProduct data) {
+        validProducts.forEach(valid -> valid.validateRegister(data));
 
         Product product = new Product(data);
         productRepository.save(product);
@@ -26,7 +28,7 @@ public class ProductService {
 
     @Transactional
     public boolean update(DataUpdateProduct data) {
-        validProducts.forEach(validProducts -> validProducts.validateUpdate(data));
+        validProducts.forEach(valid -> valid.validateUpdate(data));
         Product product = productRepository.findById(data.id())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         product.update(data);
@@ -34,12 +36,17 @@ public class ProductService {
         return true;
     }
 
-    public List<DataListProduct> findAll(){
+    public List<DataListProduct> findAll() {
         return productRepository.findAll().stream().map(DataListProduct::new).toList();
     }
 
     public DataListProduct findById(Long id) {
         return new DataListProduct(productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found")));
+    }
+
+    public List<DataListProduct> findByName(String name) {
+        List<Product> products = productRepository.findByName(name);
+        return products.stream().map(DataListProduct::new).toList();
     }
 
     public List<DataListProduct> findByTypeProductId(Long id) {

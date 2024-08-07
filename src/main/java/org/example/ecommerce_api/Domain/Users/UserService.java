@@ -1,10 +1,11 @@
 package org.example.ecommerce_api.Domain.Users;
 
 import org.example.ecommerce_api.Domain.Users.Validations.ValidUser;
+import org.example.ecommerce_api.Infra.Security.DataLoginUser;
+import org.example.ecommerce_api.Infra.Security.DataResponseLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
