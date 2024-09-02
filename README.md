@@ -27,6 +27,11 @@ Sigue estos pasos para configurar el proyecto localmente.
    git clone https://github.com/JHOMT/ecommerce_api.git
     ```
 
+   
+   ```bash
+   https://github.com/JHOMT/ecommerce_api.git
+    ```
+
 2. Navega al directorio del proyecto:
 
    ```bash
