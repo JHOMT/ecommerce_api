@@ -29,7 +29,7 @@ Sigue estos pasos para configurar el proyecto localmente.
 
    
    ```bash
-   https://github.com/JHOMT/ecommerce_api.git
+   git clone https://github.com/JHOMT/ecomers_front.git
     ```
 
 2. Navega al directorio del proyecto:
